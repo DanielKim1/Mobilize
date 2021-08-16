@@ -20,23 +20,33 @@ function Event({ event }) {
     <Col>
       <Ratio aspectRatio="1x1">
         <Card>
-          <Ratio aspectRatio="21x9">
-            <Card.Img
-              src={event.featured_image_url}
-              style={{ objectFit: "cover" }}
-              variant="top"
-              ref={ref}
-              onError={() => {
-                ref.current.src = BACKUP_IMAGE;
-                ref.current.onError = () => {
-                  console.error("Replace BACKUP_IMAGE in List.js");
-                };
-              }}
-              loading="lazy"
-            />
-          </Ratio>
+          <a aria-hidden href={event.browser_url} target="_blank" rel="noopener noreferrer">
+            <Ratio aspectRatio="21x9">
+              <Card.Img
+                src={event.featured_image_url}
+                style={{ objectFit: "cover" }}
+                variant="top"
+                ref={ref}
+                onError={() => {
+                  ref.current.src = BACKUP_IMAGE;
+                  ref.current.onError = () => {
+                    console.error("Replace BACKUP_IMAGE in List.js");
+                  };
+                }}
+                loading="lazy"
+              />
+            </Ratio>
+          </a>
           <Card.Body>
-            <Card.Title>{event.title}</Card.Title>
+            <Card.Title>
+              <a
+                href={event.browser_url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {event.title}
+              </a>
+            </Card.Title>
             <Card.Text>{event.summary}</Card.Text>
           </Card.Body>
         </Card>

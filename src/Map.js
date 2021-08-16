@@ -13,7 +13,7 @@ function Map({ response }) {
   useEffect(() => {
     const firstLocation = response.data.find(
       (event) => event.location?.location?.latitude
-    ).location.location;
+    )?.location?.location || { longitude: 0, latitude: 0 };
 
     if (!map.current) {
       map.current = new mapboxgl.Map({
@@ -21,6 +21,10 @@ function Map({ response }) {
         container: mapContainer.current,
         style: "mapbox://styles/mapbox/streets-v11",
         zoom: 12,
+      });
+    } else {
+      map.current.flyTo({
+        center: [firstLocation.longitude, firstLocation.latitude],
       });
     }
 
@@ -36,7 +40,10 @@ function Map({ response }) {
           ])
           .setPopup(
             new mapboxgl.Popup({ offset: 25 }).setHTML(
-              `<h3>${event.title}</h3><p>${event.summary}</p>`
+              `<a href="${event.browser_url}" target="_blank" rel="noopener noreferrer">
+                <h3>${event.title}</h3>
+              </a>
+              <p>${event.summary}</p>`
             )
           )
           .addTo(map.current);

@@ -12,7 +12,9 @@ import ViewButtons from "./ViewButtons";
 function App() {
   const [response, setResponse] = useState();
   const [url, setUrl] = useState(
-    "https://api.mobilize.us/v1/organizations/1/events?per_page=24"
+    `https://api.mobilize.us/v1/organizations/1/events?per_page=24&timeslot_start=gt_${
+      Math.round(Date.now() / 1000)
+    }`
   );
 
   // Attempting to replace the view/setView logic with `display: none` or

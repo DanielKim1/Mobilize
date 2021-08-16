@@ -9,17 +9,20 @@ function Filters({ url, setUrl }) {
 
   return (
     <InputGroup>
+      <Form.Label className="visually-hidden">Zip code</Form.Label>
       <Form.Control ref={ref} placeholder="ZIP Code" />
       <Button
         onClick={() => {
           if (/^\d{5}$/.test(ref.current.value)) {
             const newUrl = new URL(url);
             newUrl.searchParams.set("zipcode", ref.current.value);
+            newUrl.searchParams.delete("cursor");
+            newUrl.searchParams.delete("page");
             setUrl(newUrl.toString());
           }
         }}
       >
-        Filter
+        Filter by ZIP Code
       </Button>
     </InputGroup>
   );
